@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args){
 				
 		Scanner sc = new Scanner(System.in);	
 		
@@ -12,7 +12,6 @@ public class Main {
 
 		// Début du programme.
 		//Menu et choix.
-		bibliotheque1.recupDataFichier();
 		try {
 			menu();
 			int selection = sc.nextInt();
@@ -28,7 +27,8 @@ public class Main {
 				break;
 			case 3:
 				System.out.println("Option 3 sélectionnée.");
-				bibliotheque1.afficherListeLivre();
+				System.out.println("__________________________");
+				bibliotheque1.afficherListeLivreEtRecup();
 				main(null);
 				break;
 			case 4:

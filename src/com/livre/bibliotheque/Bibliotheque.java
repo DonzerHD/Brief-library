@@ -3,7 +3,6 @@ package com.livre.bibliotheque;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +17,8 @@ import java.util.Scanner;
  *
  */
 public class Bibliotheque extends Main {
-	List<Livre> livreList = new ArrayList<>();
+	private List<Livre> livreList = new ArrayList<>();
+	private File file = new File("data\\Livre.csv");
 
 	/**
 	 * Méthode qui permet d'ajouter des livres dans la bibliothèque saisie par
@@ -26,13 +26,11 @@ public class Bibliotheque extends Main {
 	 */
 	public void ajouterUnLivre() {
 		try {
+			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Pour retourner au menu tapez 'r' ");
 			System.out.print("Titre du livre : ");
 			String titre = sc.nextLine();
 			switch (titre) {
-			case "r":
-				main(null);// Retour menu
 			default:// Ajouter livre
 				System.out.print("Auteur du livre :");
 				String auteur = sc.nextLine();
@@ -44,7 +42,6 @@ public class Bibliotheque extends Main {
 				int nombreEx = sc.nextInt();
 				StringBuilder livreBuilder = new StringBuilder();
 				System.out.print("📙 Le livre a bien était ajouté . 📙 \n");
-
 				try {
 					Thread.sleep(1600);
 				} catch (InterruptedException e1) {
@@ -89,35 +86,50 @@ public class Bibliotheque extends Main {
 		}
 	}
 
-	public void afficherListeLivre() {
-		System.out.println("Voici la liste de tous les livres de la bibliothèque : ");
-		for (Livre livreS : livreList) {
-			StringBuilder livreBuilder = new StringBuilder();
-			livreBuilder.append("------------------------ \n");
-			livreBuilder.append("Voici ses infos :  \n");
-			livreBuilder.append("Titre : ");
-			livreBuilder.append(livreS.getTitre() + "\n");
-			livreBuilder.append("Auteur : ");
-			livreBuilder.append(livreS.getAuteur() + "\n");
-			livreBuilder.append("Genre : ");
-			livreBuilder.append(livreS.getGenre() + "\n");
-			livreBuilder.append("Nombre de pages : ");
-			livreBuilder.append(livreS.getNombrePage() + "\n");
-			livreBuilder.append("Nombre d'exemplaires : ");
-			livreBuilder.append(livreS.getNombreExemplaire() + "\n");
-			livreBuilder.append("------------------------ \n");
-			System.out.println(livreBuilder);
-		}
+	/**
+	 * Méthode qui affiche les livres et qui les récupère dans le fichier csv.
+	 */
+	public void afficherListeLivreEtRecup() {
+		String line = "";  
+		String splitBy = ",";  
+		try (BufferedReader bf = new BufferedReader(new FileReader(file)))
+		{  
+		bf.readLine();
+		while ((line = bf.readLine()) != null)  
+		{  
+		String[] livreSplit = line.split(splitBy);  
+		StringBuilder livreInfos = new StringBuilder();
+		livreInfos .append("|Titre : ");
+		livreInfos .append(livreSplit[0] + "|\n");
+		livreInfos .append("__________________________\n");
+		livreInfos .append("Auteur : ");
+		livreInfos .append(livreSplit[1] + "\n");
+		livreInfos .append("Genre : ");
+		livreInfos .append(livreSplit[2] + "\n");
+		livreInfos .append("Nombre de pages : ");
+		livreInfos .append(livreSplit[3] + "\n");
+		livreInfos .append("Nombre d'exemplaires : ");
+		livreInfos .append(livreSplit[4] + "\n");
+		livreInfos .append("——————————————————————————");
+		System.out.println(livreInfos);
+		}  
+		}   
+		catch (IOException e)   
+		{  
+		e.printStackTrace();  
+		} 
 		try {
-			Thread.sleep(7500);
+			Thread.sleep(4500);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
-		}
+		}	
 	}
 
+	/**
+	 * Méthode qui enregistre les livres dans un fichier csv.
+	 */
 	public void ecrireFichier() {
 		String DELIMITER = ",";
-		File file = new File("data\\Livre.csv");
 
 		try {
 			FileWriter fstream = new FileWriter(file, true);
@@ -130,42 +142,36 @@ public class Bibliotheque extends Main {
 				out.write(livreS.getGenre());
 				out.append(DELIMITER);
 				out.append(livreS.getNombrePage() + ",");
-				out.append(livreS.getNombreExemplaire() + "," + "\n");
+				out.append(livreS.getNombreExemplaire() + "\n");
 			}
 			out.close();
-			System.out.println("Successfully wrote to the file.");
 		} catch (IOException e) {
-			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
 	}
-
-	public void recupDataFichier() {
-		File file = new File("data\\Livre.csv");
-		BufferedReader bufferedReader = null;
-
-		try {
-			FileReader fileReader = new FileReader(file);
-			bufferedReader = new BufferedReader(fileReader);
-
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				System.out.println(line);
-			}
-
-		} catch (FileNotFoundException e) {
-			System.err.println("Le fichier n'a pas été trouve.");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Impossible de lire le contenu du fichier");
-		}
-		try {
-			bufferedReader.close();
-		} catch (IOException e) {
-			System.out.println("Impossible de fermer le ficiher");
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			System.err.println("Impossible d'ouvrir le fichier");
-		}
+	
+	public void modifier() {
+		
 	}
+	
+	public void recherche() {
+		
+	}
+
+	public List<Livre> getLivreList() {
+		return livreList;
+	}
+
+	public void setLivreList(List<Livre> livreList) {
+		this.livreList = livreList;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 }
