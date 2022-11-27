@@ -21,14 +21,6 @@ public class Bibliotheque extends Main {
 	List<Livre> livreList = new ArrayList<>();
 
 	/**
-	 * Méthode qui permet d'ajouter des livres dans la bibliothèque
-	 */
-	public Bibliotheque() {
-		livreList.add(new Livre("L'art de la guerre", "Thomas", "Histoire", 450, 8));
-		livreList.add(new Livre("Superman", "Jean", "BD", 50, 3));
-	}
-
-	/**
 	 * Méthode qui permet d'ajouter des livres dans la bibliothèque saisie par
 	 * l'utilisateur.
 	 */
@@ -126,61 +118,45 @@ public class Bibliotheque extends Main {
 	public void ecrireFichier() {
 		String DELIMITER = ",";
 		File file = new File("data\\Livre.csv");
-		BufferedWriter w = null;
 
 		try {
-			FileWriter myWriter = new FileWriter(file);
-			myWriter.write("Titre   ");
-			myWriter.write(DELIMITER);
-			myWriter.write("Auteur   ");
-			myWriter.write(DELIMITER);
-			myWriter.write("Genre   ");
-			myWriter.write(DELIMITER);
-			myWriter.write("Nombre de pages   ");
-			myWriter.write(DELIMITER);
-			myWriter.write("Nombre d'exemplaires   \n");
-			w = new BufferedWriter(new FileWriter(file, true));	
-			for (Livre livreS : livreList) {;
-				w.append(livreS.getTitre());
-				w.append(DELIMITER);
-				w.append(livreS.getAuteur());
-				w.append(DELIMITER);
-				w.write(livreS.getGenre());
-				w.append(DELIMITER);
-				w.append(livreS.getNombrePage() + ",");
-				w.append(livreS.getNombreExemplaire() + "\n");
+			FileWriter fstream = new FileWriter(file, true);
+			BufferedWriter out = new BufferedWriter(fstream);
+			for (Livre livreS : livreList) {
+				out.append(livreS.getTitre());
+				out.append(DELIMITER);
+				out.append(livreS.getAuteur());
+				out.append(DELIMITER);
+				out.write(livreS.getGenre());
+				out.append(DELIMITER);
+				out.append(livreS.getNombrePage() + ",");
+				out.append(livreS.getNombreExemplaire() + "," + "\n");
 			}
-			myWriter.close();
-			w.close();
+			out.close();
 			System.out.println("Successfully wrote to the file.");
 		} catch (IOException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void recupDataFichier() {
 		File file = new File("data\\Livre.csv");
 		BufferedReader bufferedReader = null;
-		
+
 		try {
 			FileReader fileReader = new FileReader(file);
 			bufferedReader = new BufferedReader(fileReader);
-			final String SEPARATEUR = ",";
-		
+
 			String line;
-			while((line = bufferedReader.readLine()) != null) {
-				String mots[]= line.split(SEPARATEUR);
-		        for (int i = 0 ; i < mots.length ; i++) {
-		        	System.out.println(mots[0]);
-		        }
-				
+			while ((line = bufferedReader.readLine()) != null) {
+				System.out.println(line);
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			System.err.println("Le fichier n'a pas été trouve.");
 			e.printStackTrace();
-		}  catch (IOException e) {
+		} catch (IOException e) {
 			System.err.println("Impossible de lire le contenu du fichier");
 		}
 		try {
@@ -188,9 +164,8 @@ public class Bibliotheque extends Main {
 		} catch (IOException e) {
 			System.out.println("Impossible de fermer le ficiher");
 			e.printStackTrace();
-		}catch (NullPointerException e) {
+		} catch (NullPointerException e) {
 			System.err.println("Impossible d'ouvrir le fichier");
 		}
 	}
-	}
-
+}
