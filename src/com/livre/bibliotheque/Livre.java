@@ -27,7 +27,6 @@ public class Livre{
 
     
     // Getters et Setters
-
 	public String getTitre() {
 		return titre;
 	}

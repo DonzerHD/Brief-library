@@ -12,6 +12,7 @@ public class Main {
 
 		// Début du programme.
 		//Menu et choix.
+		bibliotheque1.recupDataFichier();
 		try {
 			menu();
 			int selection = sc.nextInt();
@@ -19,6 +20,7 @@ public class Main {
 			case 1:
 				System.out.println("Option 1 sélectionnée. : ");
 				bibliotheque1.ajouterUnLivre();
+				bibliotheque1.ecrireFichier();
 				main(null);
 				break;
 			case 2:
