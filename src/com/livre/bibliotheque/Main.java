@@ -33,6 +33,8 @@ public class Main {
 				break;
 			case 4:
 				System.out.println("Option 4 sélectionnée.");
+				bibliotheque1.recherche();
+				main(null);
 				break;
 			default:
 				throw new IllegalArgumentException("L'option sélectionnée n'est pas valable : " + selection);

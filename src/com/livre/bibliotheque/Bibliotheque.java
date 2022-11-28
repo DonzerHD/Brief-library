@@ -32,13 +32,13 @@ public class Bibliotheque extends Main {
 			String titre = sc.nextLine();
 			switch (titre) {
 			default:// Ajouter livre
-				System.out.print("Auteur du livre :");
+				System.out.print("Auteur du livre : ");
 				String auteur = sc.nextLine();
-				System.out.print("Genre du livre :");
+				System.out.print("Genre du livre : ");
 				String genre = sc.nextLine();
-				System.out.print("Nombre de pages :");
+				System.out.print("Nombre de pages : ");
 				int nombrePage = sc.nextInt();
-				System.out.print("Nombre d'exemplaires :");
+				System.out.print("Nombre d'exemplaires : ");
 				int nombreEx = sc.nextInt();
 				StringBuilder livreBuilder = new StringBuilder();
 				System.out.print("📙 Le livre a bien était ajouté . 📙 \n");
@@ -90,39 +90,35 @@ public class Bibliotheque extends Main {
 	 * Méthode qui affiche les livres et qui les récupère dans le fichier csv.
 	 */
 	public void afficherListeLivreEtRecup() {
-		String line = "";  
-		String splitBy = ",";  
-		try (BufferedReader bf = new BufferedReader(new FileReader(file)))
-		{  
-		bf.readLine();
-		while ((line = bf.readLine()) != null)  
-		{  
-		String[] livreSplit = line.split(splitBy);  
-		StringBuilder livreInfos = new StringBuilder();
-		livreInfos .append("|Titre : ");
-		livreInfos .append(livreSplit[0] + "|\n");
-		livreInfos .append("__________________________\n");
-		livreInfos .append("Auteur : ");
-		livreInfos .append(livreSplit[1] + "\n");
-		livreInfos .append("Genre : ");
-		livreInfos .append(livreSplit[2] + "\n");
-		livreInfos .append("Nombre de pages : ");
-		livreInfos .append(livreSplit[3] + "\n");
-		livreInfos .append("Nombre d'exemplaires : ");
-		livreInfos .append(livreSplit[4] + "\n");
-		livreInfos .append("——————————————————————————");
-		System.out.println(livreInfos);
-		}  
-		}   
-		catch (IOException e)   
-		{  
-		e.printStackTrace();  
-		} 
+		String line = "";
+		String splitBy = ",";
+		try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
+			bf.readLine();
+			while ((line = bf.readLine()) != null) {
+				String[] livreSplit = line.split(splitBy);
+				StringBuilder livreInfos = new StringBuilder();
+				livreInfos.append("|Titre : ");
+				livreInfos.append(livreSplit[0] + "|\n");
+				livreInfos.append("__________________________\n");
+				livreInfos.append("Auteur : ");
+				livreInfos.append(livreSplit[1] + "\n");
+				livreInfos.append("Genre : ");
+				livreInfos.append(livreSplit[2] + "\n");
+				livreInfos.append("Nombre de pages : ");
+				livreInfos.append(livreSplit[3] + "\n");
+				livreInfos.append("Nombre d'exemplaires : ");
+				livreInfos.append(livreSplit[4] + "\n");
+				livreInfos.append("——————————————————————————");
+				System.out.println(livreInfos);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		try {
 			Thread.sleep(4500);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
-		}	
+		}
 	}
 
 	/**
@@ -149,13 +145,53 @@ public class Bibliotheque extends Main {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void modifier() {
-		
+
 	}
-	
+
+	/**
+	 * Méthode qui va permettre à l'utilisateur de rechercher un livre .
+	 */
 	public void recherche() {
-		
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		String line = "";
+		String splitBy = ",";
+		System.out.print("Recherche Livre : ");
+		String recherche = sc.nextLine();
+		try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
+			bf.readLine();
+			while ((line = bf.readLine()) != null) {
+				String[] livreSplit = line.split(splitBy);
+				if (recherche.equalsIgnoreCase(livreSplit[0])) {
+					System.out.println("Voici les infos du livre recherché : ");
+					System.out.println("__________________________");
+					StringBuilder livreInfos = new StringBuilder();
+					livreInfos.append("|Titre : ");
+					livreInfos.append(livreSplit[0] + "|\n");
+					livreInfos.append("__________________________\n");
+					livreInfos.append("Auteur : ");
+					livreInfos.append(livreSplit[1] + "\n");
+					livreInfos.append("Genre : ");
+					livreInfos.append(livreSplit[2] + "\n");
+					livreInfos.append("Nombre de pages : ");
+					livreInfos.append(livreSplit[3] + "\n");
+					livreInfos.append("Nombre d'exemplaires : ");
+					livreInfos.append(livreSplit[4] + "\n");
+					livreInfos.append("——————————————————————————");
+					System.out.println(livreInfos);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			Thread.sleep(4500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 
 	public List<Livre> getLivreList() {
