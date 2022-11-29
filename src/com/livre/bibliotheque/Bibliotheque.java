@@ -161,6 +161,7 @@ public class Bibliotheque extends Main {
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Quel livre voulez-vous modifier : ");
 			String recherche = sc.nextLine();
+			System.out.println("Ce livre existe");
 			System.out.println("-------------------------");
 			System.out.println("Vous avez choisi de modifier le livre : " + recherche);
 			System.out.println("-------------------------");
@@ -190,8 +191,9 @@ public class Bibliotheque extends Main {
 			PrintWriter pw = new PrintWriter(bw);
 			x = new Scanner(new File(filepath));
 			x.useDelimiter("[,\n]");
+			File dump = new File(filepath);
 			switch (choixMenu) {
-			case 1:   //Modifier titre
+			case 1: // Modifier titre
 				System.out.print("Nouveau titre :");
 				String titreM = sc.nextLine();
 				while (x.hasNext()) {
@@ -200,7 +202,7 @@ public class Bibliotheque extends Main {
 					genre = x.next();
 					np = x.next();
 					ne = x.next();
-					if (titre.equals(recherche)) {
+					if (titre.equalsIgnoreCase(recherche)) {
 						pw.print(titreM + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
 					} else {
 						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
@@ -211,7 +213,6 @@ public class Bibliotheque extends Main {
 				pw.close();
 				System.out.println("Attendez quelques secondes le Livre va être modifier");
 				oldFile.delete();
-				File dump = new File(filepath);
 				newFile.renameTo(dump);
 				try {
 					Thread.sleep(3500);
@@ -221,16 +222,118 @@ public class Bibliotheque extends Main {
 				main(null);
 				break;
 			case 2:
-				// code block
+				System.out.print("Nouveau Auteur :");
+				String auteurM = sc.nextLine();
+				while (x.hasNext()) {
+					titre = x.next();
+					auteur = x.next();
+					genre = x.next();
+					np = x.next();
+					ne = x.next();
+					if (titre.equalsIgnoreCase(recherche)) {
+						pw.print(titre + "," + auteurM + "," + genre + "," + np + "," + ne + "\n");
+					} else {
+						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
+					}
+				}
+				x.close();
+				pw.flush();
+				pw.close();
+				System.out.println("Attendez quelques secondes le Livre va être modifier");
+				oldFile.delete();
+				newFile.renameTo(dump);
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				main(null);
 				break;
 			case 3:
-				// code block
+				System.out.print("Nouveau Genre :");
+				String genreM = sc.nextLine();
+				while (x.hasNext()) {
+					titre = x.next();
+					auteur = x.next();
+					genre = x.next();
+					np = x.next();
+					ne = x.next();
+					if (titre.equalsIgnoreCase(recherche)) {
+						pw.print(titre + "," + auteur + "," + genreM + "," + np + "," + ne + "\n");
+					} else {
+						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
+					}
+				}
+				x.close();
+				pw.flush();
+				pw.close();
+				System.out.println("Attendez quelques secondes le Livre va être modifier");
+				oldFile.delete();
+				newFile.renameTo(dump);
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				main(null);
 				break;
 			case 4:
-				// code block
+				System.out.print("Nouveau nombre de pages:");
+				int nombrePN = sc.nextInt();
+				sc.nextLine();
+				while (x.hasNext()) {
+					titre = x.next();
+					auteur = x.next();
+					genre = x.next();
+					np = x.next();
+					ne = x.next();
+					if (titre.equalsIgnoreCase(recherche)) {
+						pw.print(titre + "," + auteur + "," + genre + "," + nombrePN + "," + ne + "\n");
+					} else {
+						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
+					}
+				}
+				x.close();
+				pw.flush();
+				pw.close();
+				System.out.println("Attendez quelques secondes le Livre va être modifier");
+				oldFile.delete();
+				newFile.renameTo(dump);
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				main(null);
 				break;
 			case 5:
-				// code block
+				System.out.print("Nouveau nombre d'exemplaires : ");
+				int nombreExN = sc.nextInt();
+				sc.nextLine();
+				while (x.hasNext()) {
+					titre = x.next();
+					auteur = x.next();
+					genre = x.next();
+					np = x.next();
+					ne = x.next();
+					if (titre.equalsIgnoreCase(recherche)) {
+						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + nombreExN + "\n");
+					} else {
+						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
+					}
+				}
+				x.close();
+				pw.flush();
+				pw.close();
+				System.out.println("Attendez quelques secondes le Livre va être modifier");
+				oldFile.delete();
+				newFile.renameTo(dump);
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				main(null);
 				break;
 			default:
 				throw new IllegalArgumentException("L'option sélectionnée n'est pas valable : " + choixMenu);
@@ -239,7 +342,6 @@ public class Bibliotheque extends Main {
 			System.out.println("Ce nombre correspond à aucun du menu !");
 			main(null);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
