@@ -1,13 +1,15 @@
 package com.livre.bibliotheque;
 
+
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class Main {
-	public static void main(String[] args){
-				
-		Scanner sc = new Scanner(System.in);	
-		
+	public static void main(String[] args) throws IOException{
+		Scanner sc = new Scanner(System.in);
+						
 		Bibliotheque bibliotheque1 = new Bibliotheque(); // Création de la bibliothèque .
 
 		// Début du programme.
@@ -24,6 +26,7 @@ public class Main {
 				break;
 			case 2:
 				System.out.println("Option 2 sélectionnée.");
+				bibliotheque1.modifier();
 				break;
 			case 3:
 				System.out.println("Option 3 sélectionnée.");
@@ -72,7 +75,6 @@ public class Main {
 	 */
 	public static void menu() {
 
-		/***************************************************/
 		System.out.println("-------------------------");
 		System.out.println("    |Bibliothèque|");
 		System.out.println("-------------------------");

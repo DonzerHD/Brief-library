@@ -3,9 +3,11 @@ package com.livre.bibliotheque;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -144,10 +146,102 @@ public class Bibliotheque extends Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
-	public void modifier() {
-
+	/**
+	 * Méthode qui va permettre à l'utilisateur de modifier un livre .
+	 * 
+	 * @throws IOException
+	 */
+	@SuppressWarnings("resource")
+	public void modifier() throws IOException {
+		try {
+			Scanner x;
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Quel livre voulez-vous modifier : ");
+			String recherche = sc.nextLine();
+			System.out.println("-------------------------");
+			System.out.println("Vous avez choisi de modifier le livre : " + recherche);
+			System.out.println("-------------------------");
+			System.out.println("    |Modifier|");
+			System.out.println("-------------------------");
+			System.out.println("1 - Titre");
+			System.out.println("2 - Auteur");
+			System.out.println("3 - Genre");
+			System.out.println("4 - Nombre de pages");
+			System.out.println("5 - Nombre d'exemplaires");
+			System.out.println("-------------------------");
+			System.out.print("Veuillez sélectionner une option : ");
+			int choixMenu = sc.nextInt();
+			sc.nextLine();
+			String filepath = "data\\Livre.csv";
+			String tempFile = "data\\Temp.csv";
+			File oldFile = new File(filepath);
+			File newFile = new File(tempFile);
+			String titre = "";
+			String auteur = "";
+			String genre = "";
+			String np = "";
+			String ne = "";
+			FileWriter fw;
+			fw = new FileWriter(tempFile, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter pw = new PrintWriter(bw);
+			x = new Scanner(new File(filepath));
+			x.useDelimiter("[,\n]");
+			switch (choixMenu) {
+			case 1:   //Modifier titre
+				System.out.print("Nouveau titre :");
+				String titreM = sc.nextLine();
+				while (x.hasNext()) {
+					titre = x.next();
+					auteur = x.next();
+					genre = x.next();
+					np = x.next();
+					ne = x.next();
+					if (titre.equals(recherche)) {
+						pw.print(titreM + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
+					} else {
+						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
+					}
+				}
+				x.close();
+				pw.flush();
+				pw.close();
+				System.out.println("Attendez quelques secondes le Livre va être modifier");
+				oldFile.delete();
+				File dump = new File(filepath);
+				newFile.renameTo(dump);
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				main(null);
+				break;
+			case 2:
+				// code block
+				break;
+			case 3:
+				// code block
+				break;
+			case 4:
+				// code block
+				break;
+			case 5:
+				// code block
+				break;
+			default:
+				throw new IllegalArgumentException("L'option sélectionnée n'est pas valable : " + choixMenu);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Ce nombre correspond à aucun du menu !");
+			main(null);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
