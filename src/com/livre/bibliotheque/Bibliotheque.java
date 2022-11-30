@@ -22,6 +22,7 @@ public class Bibliotheque extends Main {
 	private List<Livre> livreList = new ArrayList<>();
 	private File file = new File("data\\Livre.csv");
 
+
 	/**
 	 * Méthode qui permet d'ajouter des livres dans la bibliothèque saisie par
 	 * l'utilisateur.
@@ -137,7 +138,7 @@ public class Bibliotheque extends Main {
 				out.append(DELIMITER);
 				out.append(livreS.getAuteur());
 				out.append(DELIMITER);
-				out.write(livreS.getGenre());
+				out.append(livreS.getGenre());
 				out.append(DELIMITER);
 				out.append(livreS.getNombrePage() + ",");
 				out.append(livreS.getNombreExemplaire() + "\n");
@@ -161,7 +162,6 @@ public class Bibliotheque extends Main {
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Quel livre voulez-vous modifier : ");
 			String recherche = sc.nextLine();
-			System.out.println("Ce livre existe");
 			System.out.println("-------------------------");
 			System.out.println("Vous avez choisi de modifier le livre : " + recherche);
 			System.out.println("-------------------------");
@@ -358,9 +358,11 @@ public class Bibliotheque extends Main {
 		String recherche = sc.nextLine();
 		try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
 			bf.readLine();
+			boolean valid = false;
 			while ((line = bf.readLine()) != null) {
 				String[] livreSplit = line.split(splitBy);
 				if (recherche.equalsIgnoreCase(livreSplit[0])) {
+					valid = true;
 					System.out.println("Voici les infos du livre recherché : ");
 					System.out.println("__________________________");
 					StringBuilder livreInfos = new StringBuilder();
@@ -378,6 +380,9 @@ public class Bibliotheque extends Main {
 					livreInfos.append("——————————————————————————");
 					System.out.println(livreInfos);
 				}
+				}if(valid == false) {
+					System.out.println("Ce livre n'est pas dans notre bibliothèque ou il n'existe pas");
+	                 main(null);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
