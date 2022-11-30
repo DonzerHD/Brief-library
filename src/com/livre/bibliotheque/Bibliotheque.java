@@ -32,16 +32,36 @@ public class Bibliotheque extends Main {
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Titre du livre : ");
 			String titre = sc.nextLine();
+			if (titre.length() > 30 || titre.length() < 1 ) {
+				System.out.println("Le nombre de caractère n'est pas autorisé.");
+				ajouterUnLivre();
+			}
 			switch (titre) {
 			default:// Ajouter livre
 				System.out.print("Auteur du livre : ");
 				String auteur = sc.nextLine();
+				if (auteur.length() > 30 || auteur.length() < 1 ) {
+					System.out.println("Le nombre de caractère n'est pas autorisé.");
+					ajouterUnLivre();
+				}
 				System.out.print("Genre du livre : ");
 				String genre = sc.nextLine();
+				if (genre.length() > 30 || genre.length() < 1 ) {
+					System.out.println("Le nombre de caractère n'est pas autorisé.");
+					ajouterUnLivre();
+				}
 				System.out.print("Nombre de pages : ");
 				int nombrePage = sc.nextInt();
+				if (nombrePage > 10000 || nombrePage < 0 ) {
+					System.out.println("Ce nombre n'est pas autorisé.");
+					main(null);
+				}
 				System.out.print("Nombre d'exemplaires : ");
 				int nombreEx = sc.nextInt();
+				if (nombreEx > 10000 || nombreEx < 0 ) {
+					System.out.println("Ce nombre n'est pas autorisé.");
+					ajouterUnLivre();
+				}
 				StringBuilder livreBuilder = new StringBuilder();
 				System.out.print("📙 Le livre a bien était ajouté . 📙 \n");
 				try {
@@ -396,37 +416,40 @@ public class Bibliotheque extends Main {
 		String splitBy = ",";
 		// Fichier Split recherche
 		String Split = "";
-		String 	first = "";
 		System.out.print("Recherche Livre : ");
 		String recherche = sc.nextLine();
 		try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
 			bf.readLine();
 			boolean valid = false;
+			System.out.println("------------------------------");
+			System.out.println("Voici les infos des livre : ");
+			System.out.println("------------------------------");
 			while ((line = bf.readLine()) != null) {
 				String[] livreSplit = line.split(splitBy);
 				String[] livreSplit1 = line.split(Split);
-				for (int i = 0 ;  i < livreSplit.length; i ++) {
-				String finalS =  livreSplit1[0] + livreSplit1[1] +livreSplit1[2];
-				if (recherche.equalsIgnoreCase(finalS)) {
-					valid = true;
-					System.out.println("Voici les infos du livre recherché : ");
-					System.out.println("__________________________");
-					StringBuilder livreInfos = new StringBuilder();
-					livreInfos.append("|Titre : ");
-					livreInfos.append(livreSplit[0] + "|\n");
-					livreInfos.append("__________________________\n");
-					livreInfos.append("Auteur : ");
-					livreInfos.append(livreSplit[1] + "\n");
-					livreInfos.append("Genre : ");
-					livreInfos.append(livreSplit[2] + "\n");
-					livreInfos.append("Nombre de pages : ");
-					livreInfos.append(livreSplit[3] + "\n");
-					livreInfos.append("Nombre d'exemplaires : ");
-					livreInfos.append(livreSplit[4] + "\n");
-					livreInfos.append("——————————————————————————");
-					System.out.println(livreInfos);
+				String finalS = "";
+				for (int i = 0; i < livreSplit[0].length(); i++) {
+					finalS = finalS + livreSplit1[i];
+					if (recherche.equalsIgnoreCase(finalS)) {
+						valid = true;
+						System.out.println("__________________________");
+						StringBuilder livreInfos = new StringBuilder();
+						livreInfos.append("|Titre : ");
+						livreInfos.append(livreSplit[0] + "|\n");
+						livreInfos.append("__________________________\n");
+						livreInfos.append("Auteur : ");
+						livreInfos.append(livreSplit[1] + "\n");
+						livreInfos.append("Genre : ");
+						livreInfos.append(livreSplit[2] + "\n");
+						livreInfos.append("Nombre de pages : ");
+						livreInfos.append(livreSplit[3] + "\n");
+						livreInfos.append("Nombre d'exemplaires : ");
+						livreInfos.append(livreSplit[4] + "\n");
+						livreInfos.append("——————————————————————————");
+						System.out.println(livreInfos);
+					}
 				}
-			}}
+			}
 			if (valid == false) {
 				System.out.println("Ce livre n'est pas dans notre bibliothèque ou il n'existe pas");
 				main(null);
