@@ -22,7 +22,6 @@ public class Bibliotheque extends Main {
 	private List<Livre> livreList = new ArrayList<>();
 	private File file = new File("data\\Livre.csv");
 
-
 	/**
 	 * Méthode qui permet d'ajouter des livres dans la bibliothèque saisie par
 	 * l'utilisateur.
@@ -162,6 +161,7 @@ public class Bibliotheque extends Main {
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Quel livre voulez-vous modifier : ");
 			String recherche = sc.nextLine();
+			RechercheModif(recherche);
 			System.out.println("-------------------------");
 			System.out.println("Vous avez choisi de modifier le livre : " + recherche);
 			System.out.println("-------------------------");
@@ -196,6 +196,10 @@ public class Bibliotheque extends Main {
 			case 1: // Modifier titre
 				System.out.print("Nouveau titre :");
 				String titreM = sc.nextLine();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+				}
 				while (x.hasNext()) {
 					titre = x.next();
 					auteur = x.next();
@@ -224,6 +228,10 @@ public class Bibliotheque extends Main {
 			case 2:
 				System.out.print("Nouveau Auteur :");
 				String auteurM = sc.nextLine();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+				}
 				while (x.hasNext()) {
 					titre = x.next();
 					auteur = x.next();
@@ -252,6 +260,10 @@ public class Bibliotheque extends Main {
 			case 3:
 				System.out.print("Nouveau Genre :");
 				String genreM = sc.nextLine();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+				}
 				while (x.hasNext()) {
 					titre = x.next();
 					auteur = x.next();
@@ -280,6 +292,10 @@ public class Bibliotheque extends Main {
 			case 4:
 				System.out.print("Nouveau nombre de pages:");
 				int nombrePN = sc.nextInt();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+				}
 				sc.nextLine();
 				while (x.hasNext()) {
 					titre = x.next();
@@ -309,6 +325,10 @@ public class Bibliotheque extends Main {
 			case 5:
 				System.out.print("Nouveau nombre d'exemplaires : ");
 				int nombreExN = sc.nextInt();
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+				}
 				sc.nextLine();
 				while (x.hasNext()) {
 					titre = x.next();
@@ -322,17 +342,16 @@ public class Bibliotheque extends Main {
 						pw.print(titre + "," + auteur + "," + genre + "," + np + "," + ne + "\n");
 					}
 				}
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e1) {
+				}
 				x.close();
 				pw.flush();
 				pw.close();
 				System.out.println("Attendez quelques secondes le Livre va être modifier");
 				oldFile.delete();
 				newFile.renameTo(dump);
-				try {
-					Thread.sleep(3500);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
 				main(null);
 				break;
 			default:
@@ -346,6 +365,27 @@ public class Bibliotheque extends Main {
 		}
 	}
 
+	public void RechercheModif(String recherche) {
+		String line = "";
+		String splitBy = ",";
+		try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
+			bf.readLine();
+			boolean valid = false;
+			while ((line = bf.readLine()) != null) {
+				String[] livreSplit = line.split(splitBy);
+				if (recherche.equalsIgnoreCase(livreSplit[0])) {
+					valid = true;
+				}
+			}
+			if (valid == false) {
+				System.out.println("Ce livre n'est pas dans notre bibliothèque ou il n'existe pas");
+				main(null);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Méthode qui va permettre à l'utilisateur de rechercher un livre .
 	 */
@@ -354,6 +394,9 @@ public class Bibliotheque extends Main {
 		Scanner sc = new Scanner(System.in);
 		String line = "";
 		String splitBy = ",";
+		// Fichier Split recherche
+		String Split = "";
+		String 	first = "";
 		System.out.print("Recherche Livre : ");
 		String recherche = sc.nextLine();
 		try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
@@ -361,7 +404,10 @@ public class Bibliotheque extends Main {
 			boolean valid = false;
 			while ((line = bf.readLine()) != null) {
 				String[] livreSplit = line.split(splitBy);
-				if (recherche.equalsIgnoreCase(livreSplit[0])) {
+				String[] livreSplit1 = line.split(Split);
+				for (int i = 0 ;  i < livreSplit.length; i ++) {
+				String finalS =  livreSplit1[0] + livreSplit1[1] +livreSplit1[2];
+				if (recherche.equalsIgnoreCase(finalS)) {
 					valid = true;
 					System.out.println("Voici les infos du livre recherché : ");
 					System.out.println("__________________________");
@@ -380,9 +426,10 @@ public class Bibliotheque extends Main {
 					livreInfos.append("——————————————————————————");
 					System.out.println(livreInfos);
 				}
-				}if(valid == false) {
-					System.out.println("Ce livre n'est pas dans notre bibliothèque ou il n'existe pas");
-	                 main(null);
+			}}
+			if (valid == false) {
+				System.out.println("Ce livre n'est pas dans notre bibliothèque ou il n'existe pas");
+				main(null);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
