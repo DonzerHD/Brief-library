@@ -63,7 +63,7 @@ public class Bibliotheque extends Main {
 					ajouterUnLivre();
 				}
 				StringBuilder livreBuilder = new StringBuilder();
-				System.out.print("📙 Le livre a bien était ajouté . 📙 \n");
+				System.out.print(" Le livre a bien était ajouté . \n");
 				try {
 					Thread.sleep(1600);
 				} catch (InterruptedException e1) {
@@ -88,7 +88,7 @@ public class Bibliotheque extends Main {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				System.out.println(" ⚠️⚠️ Retour dans le menu dans quelques secondes. ⚠️⚠️");
+				System.out.println(" Retour dans le menu dans quelques secondes.");
 				try {
 					Thread.sleep(5500);
 				} catch (InterruptedException e1) {
